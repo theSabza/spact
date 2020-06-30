@@ -13,8 +13,8 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: npm start &
-      - run: sleep 30
+      - run: npm start 
+      # - run: sleep 30
       # - run: npm test
       - run:
           name: Setup variables
