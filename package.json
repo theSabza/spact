@@ -1,0 +1,45 @@
+{
+  "name": "spact",
+  "version": "1.0.0",
+  "description": "SPACT API for KAIST COVID-19 efforts on contact tracing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theSabza/spact.git"
+  },
+  "author": "Hamza A. Dastagir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theSabza/spact/issues"
+  },
+  "homepage": "https://github.com/theSabza/spact#readme",
+  "dependencies": {
+    "authenticator": "^1.1.5",
+    "aws-sdk": "^2.507.0",
+    "bcryptjs": "^2.4.3",
+    "cryptr": "github:MauriceButler/cryptr",
+    "dynamodb-data-types": "^3.0.1",
+    "express": "^4.17.1",
+    "express-winston": "^3.3.0",
+    "handlebars": "^4.7.6",
+    "loadash": "^1.0.0",
+    "lodash": "^4.17.15",
+    "mailgun-js": "^0.22.0",
+    "moment": "^2.24.0",
+    "mongodb": "^3.3.0",
+    "nodemon": "^2.0.4",
+    "qrcode": "^1.4.4",
+    "uuid": "^3.3.3",
+    "validate.js": "^0.13.1",
+    "winston": "^3.2.1",
+    "zxcvbn": "^4.4.2"
+  },
+  "devDependencies": {
+    "await-timeout": "^1.0.1",
+    "jest": "^24.8.0",
+    "supertest": "^4.0.2"
+  }
+}
