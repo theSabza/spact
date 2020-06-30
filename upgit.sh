@@ -33,3 +33,7 @@ echo "---------------------"
 git add -A
 git commit -m "$GIT_REPO | Branch: $GIT_BRANCH | Action: $GIT_ACTION "
 git push origin $GIT_BRANCH
+
+# git add -A
+# git commit -m "SPACT | master| Action: First Testing deploy "
+# git push origin master

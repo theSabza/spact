@@ -19,9 +19,10 @@ _.run = async () => {
     try {
         // Load the secret data
         let secretData = await secrets.load();
+        // console.log(secretData);
 
         // Start the mongo db server
-        await mongo.start();
+        await mongo.start(secretData);
 
         // Start the server
         await server.start();
