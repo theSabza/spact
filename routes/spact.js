@@ -149,7 +149,8 @@ _.getAll = async (req, res) => {
         // Instantiate a new new based onn the string requested
         key = '_id';
         console.log(req.query)
-        let spact = new Spact(get(req.query, key));
+        let spact = new Spact();
+        // let spact = new Spact(get(req.query, key));
         
         if(spact.err) { return res.status(400).json(new QueryError(key, spact.err));}
 
@@ -163,7 +164,7 @@ _.getAll = async (req, res) => {
         let record = await spact.getRecordByRole('public');
 
         // Return the filtered data
-        res.json(record)
+        res.json(result)
 
 
 
