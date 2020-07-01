@@ -1,0 +1,1 @@
+docker run -it --entrypoint /bin/bash thesabza/spact-master:0.1.8 -s
