@@ -55,7 +55,7 @@ let _ = class {
             console.log(item)
 
             let result = await mongo.db.collection(collection).findOne({_id : this._id});
-            console.log(result)
+            
             if(result) {
                 for (let key in result) {
                     this[key] = result[key];
@@ -75,7 +75,7 @@ let _ = class {
     }
 
 
-    async loadAll(collection = false) {
+    async loadAllDataInCollection(collection = false) {
 
         try {
 
@@ -88,7 +88,7 @@ let _ = class {
             // console.log(item)
 
             let result = await mongo.db.collection(collection).find();
-            console.log(result)
+            // console.log(result.data)
             // if(result) {
             //     for (let key in result) {
             //         this[key] = result[key];

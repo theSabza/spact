@@ -35,9 +35,13 @@ let _ = class {
         this.created = Date.now();
         this.internal = {};
 
+
+
+
         
         // Enf of  _.constructor()
     }
+
 
     // Remove a record from a specific queue
     async remove(queue = false) {

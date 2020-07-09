@@ -9,6 +9,8 @@ const mongo = require('./lib/mongo');
 const server = require('./lib/server');
 const emailSender = require('./workers/emailSender');
 
+// const secrets = require('./ApiDocs/secrets')
+
 
 // Create module to export
 let _ = {};
@@ -19,13 +21,17 @@ _.run = async () => {
     try {
         // Load the secret data
         let secretData = await secrets.load();
+
+        // secretData = secrets;
+
         // console.log(secretData);
 
         // Start the mongo db server
         await mongo.start(secretData);
 
+        // console.log(secretData)
         // Start the server
-        await server.start();
+        await server.start(secretData);
 
         // Start the background workers
         // await emailSender.start();

@@ -5,7 +5,7 @@
  */
 
  const AWS = require('aws-sdk');
- const AWSregion = "us-east-2";
+ const AWSregion = "us-east-1";
  AWS.config.update({region: AWSregion});
  const s3 = new AWS.S3();
 

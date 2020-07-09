@@ -93,7 +93,130 @@ let _ = class extends base {
         await super.save('users');
     }
 
+    // Set the first namecons
+    async setDobYear(year) {
+
+        try {
+
+
+            // Get the validation message, if any
+            let msg = validate.single(String(year), constraints.dobYear());
+            if (msg) {
+                return msg;
+            } else {
+                this.dob.year = year;
+                return;
+            }
+            
+
+        } catch (err) {
+            console.log(err)
+            throw( new Error(err));
+        }
+    }
     
+    // Set the first name
+    async setDobMonth(month) {
+
+        try {
+
+            // Get the validation message, if any
+            let msg = validate.single(String(month), constraints.dobMonth());
+            if (msg) {
+                return msg;
+            } else {
+                this.dob.month = month;
+                return;
+            }
+            
+
+        } catch (err) {
+            throw( new Error(err));
+        }
+    }
+    
+    // Set the first name
+    async setDobDay(day) {
+
+        try {
+            // Get the validation message, if any
+            let msg = validate.single(String(day), constraints.dobDay());
+
+            // Make sure year has been set
+            if(!this.dob.year) throw(new Error('Dob.day cannot be set on user object before year'));
+            
+            // Make sure mont has been set
+            if(!this.dob.mont) throw(new Error('Dob.day cannot be set on user object before month'));
+
+            let maxDays = 31;
+            switch (this.dob.month) {
+                case 9:
+                case 4:
+                case 6:
+                case 11:
+                    maxDays = 30;
+                break;
+                case 2:
+                    maxDays = 29;
+
+            }
+            if(day > maxDays) {
+                return ['day choosen is not valid given the month'];
+            }
+            if(this.dob.month == 2 && day === 29) {
+                if(!(((this.dob.year%4 == 0) && (this.dob.year % 100 != 0)) || (this.dob.year % 400 == 0))){
+                    return ['day and month combination is not valid given the year'];
+                }
+            }
+
+            // If validatiion passes, format the  input  accordingly
+            if (msg) {
+                return msg;
+            } else {
+                this.dob.day = day;
+                return;
+            }
+            
+
+        } catch (err) {
+            throw( new Error(err));
+        }
+    }
+
+    // Validate age as per limit
+    async isAgeValid(minYears) {
+        try {
+
+            let isValid = false;
+
+            // Make sure year has been set
+            if(!this.dob.year) throw(new Error('Age cannot be set on user object before year'));
+            
+            // Make sure month has been set
+            if(!this.dob.month) throw(new Error('Age cannot be set on user object before month'));
+            
+            // Make sure day has been set
+            if(!this.dob.day) throw(new Error('Age cannot be set on user object before month'));
+
+            // Calculate the duration between now and the  user's DOB
+            let day = this.dob.day < 10 ? ' ' + this.dob.day : this.dob.day;
+            let month = this.dob.month < 10 ? ' ' + this.dob.month : this.dob.month;
+
+            let start = new moment(month+'-'+day+'-'+this.dob.year, 'MM-DD-YYYY');
+            let end = new moment();
+
+            let duration = moment.duration(end.diff(start));
+            let years = duration.asYears();
+
+            if (years >= 18) isValid = true;
+
+            return isValid;
+
+
+        } catch (err) {
+            throw( new Error(err));
+        }
+    }
 
     // Set the first name
     async setFirstName(firstname) {
@@ -186,6 +309,7 @@ let _ = class extends base {
 
             // Get validation message(s), if any
             let msg = validate.single(password, constraints.password());
+            console.log("Password: " + msg)
             if(msg) return msg;
             
             // Get password strength
@@ -256,131 +380,7 @@ let _ = class extends base {
     }
 
 
-    // Set the first name
-    async setDobYear(year) {
 
-        try {
-
-            // Get the validation message, if any
-            let msg = validate.single(year, constraints.dobYear());
-
-            if (msg) {
-                return msg;
-            } else {
-                this.dob.year = year;
-                return;
-            }
-            
-
-        } catch (err) {
-            throw( new Error(err));
-        }
-    }
-
-    // Set the first name
-    async setDobMonth(month) {
-
-        try {
-
-            // Get the validation message, if any
-            let msg = validate.single(month, constraints.dobMonth());
-
-            if (msg) {
-                return msg;
-            } else {
-                this.dob.month = month;
-                return;
-            }
-            
-
-        } catch (err) {
-            throw( new Error(err));
-        }
-    }
-
-    // Set the first name
-    async setDobDay(day) {
-
-        try {
-
-            // Get the validation message, if any
-            let msg = validate.single(day, constraints.dobDay());
-
-            // Make sure year has been set
-            if(!this.dob.year) throw(new Error('Dob.day cannot be set on user object before year'));
-            
-            // Make sure mont has been set
-            if(!this.dob.mont) throw(new Error('Dob.day cannot be set on user object before month'));
-
-            let maxDays = 31;
-            switch (this.dob.month) {
-                case 9:
-                case 4:
-                case 6:
-                case 11:
-                    maxDays = 30;
-                break;
-                case 2:
-                    maxDays = 29;
-
-            }
-            if(day > maxDays) {
-                return ['day choosen is not valid given the month'];
-            }
-            if(this.dob.month == 2 && day === 29) {
-                if(!(((this.dob.year%4 == 0) && (this.dob.year % 100 != 0)) || (this.dob.year % 400 == 0))){
-                    return ['day and month combination is not valid given the year'];
-                }
-            }
-
-            // If validatiion passes, format the  input  accordingly
-            if (msg) {
-                return msg;
-            } else {
-                this.dob.day = day;
-                return;
-            }
-            
-
-        } catch (err) {
-            throw( new Error(err));
-        }
-    }
-
-    // Validate age as per limit
-    async isAgeValid(minYears) {
-        try {
-
-            let isValid = false;
-
-            // Make sure year has been set
-            if(!this.dob.year) throw(new Error('Age cannot be set on user object before year'));
-            
-            // Make sure month has been set
-            if(!this.dob.month) throw(new Error('Age cannot be set on user object before month'));
-            
-            // Make sure day has been set
-            if(!this.dob.day) throw(new Error('Age cannot be set on user object before month'));
-
-            // Calculate the duration between now and the  user's DOB
-            let day = this.dob.day < 10 ? ' ' + this.dob.day : this.dob.day;
-            let month = this.dob.month < 10 ? ' ' + this.dob.month : this.dob.month;
-
-            let start = new moment(month+'-'+day+'-'+this.dob.year, 'MM-DD-YYYY');
-            let end = new moment();
-
-            let duration = moment.duration(end.diff(start));
-            let years = duration.asYears();
-
-            if (years >= 18) isValid = true;
-
-            return isValid;
-
-
-        } catch (err) {
-            throw( new Error(err));
-        }
-    }
 
 
 

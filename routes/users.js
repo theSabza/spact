@@ -29,45 +29,25 @@ let _ = {};
 _.post = async (req, res) => {
     
     try {
-        // if (req.body.testNo) {
-        //     console.log('Starting - /route/user - Line 25 : TEST NO : ' + req.body.testNo);
-        // }
+        
+
+
 
 
         // Instantiate a new user. Either pulls a user by ID, or pulls a user in default data
         let user = new User();
 
-
+     
         // Defaults for the validation process
         let key = false;
         let msg = false;
         let policyName = false;
 
-        // Set DOB Year
-        key = 'dob.year';
-        msg = await user.setDobYear(get(req.body.key));
-        if(msg) return res.status(400).json(new PayloadError(key, msg));
 
-        // Set DOB Month
-        key = 'dob.month';
-        msg = await user.setDobMonth(get(req.body.key));
-        if(msg) return res.status(400).json(new PayloadError(key, msg));
-
-        // Set DOB Year
-        key = 'dob.month';
-        msg = await user.setDobDay(get(req.body.key));
-        if(msg) return res.status(400).json(new PayloadError(key, msg));
-
-        // Validate Age  of the  User
-        let isAgeValid = await user.isAgeValid(18);
-        if(!isAgeValid) return res.status(403).end();
-
-        
         // Set first name
         key = 'name.first';
         msg = await user.setFirstName(get(req.body, key));
         if(msg) return res.status(400).json(new PayloadError(key, msg));
-
 
         // Set last name
         key = 'name.last';
@@ -77,6 +57,14 @@ _.post = async (req, res) => {
         // Set handle
         key = 'handle';
         msg = await user.setHandle(get(req.body, key));
+        console.log("Handle msg: " + msg)
+        if(msg) return res.status(400).json(new PayloadError(key, msg));
+
+        console.log("Entering password block")
+        // Set Password Hash
+        key = 'password';
+        msg = await user.setPasswordHash(get(req.body, key));
+        console.log("Routes password message: " + msg)
         if(msg) return res.status(400).json(new PayloadError(key, msg));
 
         // Set Poilicy - terms
@@ -91,10 +79,7 @@ _.post = async (req, res) => {
         msg = await user.setPolicyAgreement(policyName,get(req.body, key));
         if(msg) return res.status(400).json(new PayloadError(key, msg));
 
-        // Set Password Hash
-        key = 'password';
-        msg = await user.setPasswordHash(get(req.body, key));
-        if(msg) return res.status(400).json(new PayloadError(key, msg));
+        
 
         // Check the token that was set
         key = 'emailToken._id';
@@ -124,6 +109,34 @@ _.post = async (req, res) => {
         // Set the refId for the email 
         msg = await emailAddress.setRefId(user._id);
         if(msg) return res.status(500).end();
+
+        // Set DOB Year
+        // key = 'dob.year';
+        // msg = await user.setDobYear(get(req.body, key));
+        // if(msg) return res.status(400).json(new PayloadError(key, msg));
+
+
+        // // Set DOB Month
+        // key = 'dob.month';
+        // msg = await user.setDobMonth(get(req.body, key));
+        // if(msg) return res.status(400).json(new PayloadError(key, msg));
+
+        // // Set DOB Day
+        // key = 'dob.day';
+        // msg = await user.setDobDay(get(req.body, key));
+        // if(msg) return res.status(400).json(new PayloadError(key, msg));
+
+        // // Validate Age  of the  User
+        // let isAgeValid = await user.isAgeValid(18);
+        // if(!isAgeValid) return res.status(403).end();
+
+        
+        
+
+
+        
+
+        
 
         // Save the new email in dynamo, only if such an email doesn't exist
         let doNotUpdate = true;

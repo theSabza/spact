@@ -133,9 +133,9 @@ let _ = class extends base {
     }
 
     // Load this data from the  email verfication table on mongodb
-    async loadAll() {
+    async loadAllDataInCollection() {
         // emailVerification -> collection in mongodb
-        await super.loadAll('spact-data');
+        await super.loadAllDataInCollection('spact-data');
     }
 
     // Save this data from the  email verfication table on mongodb

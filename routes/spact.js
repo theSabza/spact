@@ -155,7 +155,7 @@ _.getAll = async (req, res) => {
         if(spact.err) { return res.status(400).json(new QueryError(key, spact.err));}
 
         // Sync the object with the data from the database
-        let result = await spact.loadAll();
+        let result = await spact.loadAllDataInCollection();
         
         if(spact.err) { return res.status(404).json(new RequestError(404));}
 
