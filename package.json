@@ -19,7 +19,7 @@
   "homepage": "https://github.com/theSabza/spact#readme",
   "dependencies": {
     "authenticator": "^1.1.5",
-    "aws-sdk": "^2.507.0",
+    "aws-sdk": "^2.814.0",
     "bcryptjs": "^2.4.3",
     "cryptr": "github:MauriceButler/cryptr",
     "dynamodb-data-types": "^3.0.1",
